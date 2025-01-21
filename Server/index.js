@@ -10,6 +10,7 @@ import { errorHandler, notFound } from "./middlewares/errorMiddlware.js";
 import userRouter from "./router/userRouter.js"
 import driverRouter from "./router/driverRoute.js"
 import riderRouter from "./router/riderRoute.js"
+import maps from "./router/maps.js"
 import connect from "./connect/connect.js"
 
 // dotenv Configration
@@ -43,6 +44,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use("/api/user/", userRouter);
 app.use("/api/driver/", driverRouter);
 app.use("/api/rider/", riderRouter);
+app.use("/api/maps/", maps);
 
 let __dirname = path.resolve();
 

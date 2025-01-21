@@ -20,6 +20,7 @@ import RiderRegister from "./Pages/Register/RiderRegister";
 import Navbaaar from "./Pages/Navbaaar";
 import DriverDashboard from "./Components/DriverDashboard";
 import MapWithDistance from "./Pages/Destination/MapWithDistance";
+import RiderDestination from "./Pages/Destination/RiderDestination";
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function App() {
         <Route path="to-ride" element={<Chooseride />} />
         <Route path="to-drivee" element={<Drive />} />
         <Route path="to-dashboard" element={<DriverDashboard />} />
-        <Route path="to-chooseride" element={<Chooseride />} />
+        <Route path="to-chooseride" element={<RiderDestination />} />
+        {/* <Route path="to-chooseride" element={<Chooseride />} /> */}
         <Route path="/destination/:id" element={<MapWithDistance />} />
 
       </Routes>
