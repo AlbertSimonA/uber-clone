@@ -24,7 +24,7 @@ function Home() {
         {/* <Navbar/> */}
    
     <Banner/>
-    <RegistrationForm/>
+   
     <Bannerform/>
      <Suggestions/>
      <Drivehompage/>
