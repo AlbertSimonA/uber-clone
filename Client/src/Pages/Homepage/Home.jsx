@@ -6,6 +6,7 @@ import About from "../../Components/About"
 // import FAQ from "../../Components/Faq"
 import Options from "../Login/Options"
 import Navbaaar from "../Navbaaar"
+import RegistrationForm from "../Registration/RegistrationForm"
 
 import Banner from "./Banner"
 import Bannerform from "./Bannerform"
@@ -23,6 +24,7 @@ function Home() {
         {/* <Navbar/> */}
    
     <Banner/>
+    <RegistrationForm/>
     <Bannerform/>
      <Suggestions/>
      <Drivehompage/>
