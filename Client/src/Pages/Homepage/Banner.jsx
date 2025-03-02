@@ -22,7 +22,7 @@ const Banner = () => {
         <p className="overflow-hidden whitespace-nowrap text-lg sm:text-xl lg:text-2xl text-gray-600 my-4">
           Experience the convenience of auto rickshaw booking at your fingertips!
         </p>
-        <div className="flex flex-wrap gap-4 pt-4">
+        {/* <div className="flex flex-wrap gap-4 pt-4">
           <button
             className="sm:w-[170px] border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white font-semibold px-5 py-3 sm:px-8 sm:py-6 text-sm sm:text-lg rounded-full"
           >
@@ -33,7 +33,7 @@ const Banner = () => {
           >
             Learn More
           </button>
-        </div>
+        </div> */}
         
       </div>
 

@@ -3,6 +3,7 @@
 
 
 import About from "../../Components/About"
+import Destine from "../Destination/Destine"
 // import FAQ from "../../Components/Faq"
 import Options from "../Login/Options"
 import Navbaaar from "../Navbaaar"
@@ -25,8 +26,8 @@ function Home() {
    
     <Banner/>
    
-    <Bannerform/>
-     <Suggestions/>
+   
+     
      <Drivehompage/>
      <Valanbusiness/>
      <Rentcar/>

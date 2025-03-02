@@ -1,126 +1,172 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useState, } from 'react';
+import { Check, Bell, } from 'lucide-react';
+import { useLocation } from 'react-router';
 
 const Chooseride = () => {
 
   let location = useLocation();
-  console.log(location.state,"location");
+
+
+  const [selectedRide, setSelectedRide] = useState('');
+  const [showNotification, setShowNotification] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   
+  // Mock data that would normally come from location state
+  // const mockData = {
+  //   time: "15 min",
+  //   distance: "5.2 km",
+  //   price: {
+  //     moto: 6.50,
+  //     auto: 10.25,
+  //     car: 15.75
+  //   }
+  // };
 
-  const [allDriver, setAllDriver] = useState([]);
-  const [errorMSG, setErrorMSG] = useState("");
+  const handleRideSelect = (rideType) => {
+    setSelectedRide(rideType);
+  };
 
-  // useEffect(()=>{
-  //   getAllDrivers()
-   
-  // },[])
-
-  // const getAllDrivers = async()=>{
-  //   await axios
-  //   .get("http://localhost:8000/api/driver/get-allDrivers")
-  //   .then((res) => {
-  //     console.log(res.data.driver,"res.driverres.driverres.driver");
+  const handleConfirmRide = () => {
+    if (selectedRide) {
+      setIsConfirming(true);
       
-  //     setAllDriver(res.data.driver)
-  //   }).catch((error) => {
-      
-  //     setErrorMSG(error.response.data.message)
-  //   })
-  // }
+      // Simulate API request delay
+      setTimeout(() => {
+        setIsConfirming(false);
+        setShowNotification(true);
+        
+        // Auto hide notification after 5 seconds
+        setTimeout(() => {
+          setShowNotification(false);
+        }, 5000);
+      }, 1500);
+    }
+  };
+
+  const rideIcons = {
+    moto: "🏍️",
+    auto: "🛺",
+    sedan: "🚗"
+  };
+
   return (
-    <div className="ride-section items-center">
-      <div className="ride my-10 flex flex-col items-center justify-center">
-        <h1 className="text-center text-4xl">Choose a ride</h1>
-        {/* <h2 className="text-center text-xl">Recommended</h2> */}
-        <div className="recommended-vehicles">
-
-         {/* {allDriver?.map((item)=>(
-          <div className="recomendations my-10 cursor-pointer" onClick={()=>navigate(`/destination/${item.latitude},${item.longitude}`)}>
-            <div className="car flex justify-between items-center gap-3">
-              {item.vehicle == "Car" ?<img src="../images/ride.png" alt="" />:<img className="h-[200px] w-[200px]" src="../images/rideauto.png" alt="" />}
-              <div className="car-details">
-                <h1
-                  className="font-bold text-2xl"
-
-                >
-                  {item.vehicle}
-                </h1>
-                <p>Driver Name : {item.driverName}</p>
-                <button className=" text-white w-[70px] rounded-lg bg-blue-500">
-                  Faster
-                </button>
-              </div>
-              <h1 className="my-14 font-bold ">$ {Math.floor(Math.random() * 900) + 100}.{(Math.random()).toFixed(2).slice(2)}</h1>
+    <div className="flex flex-col gap-3 p-4 max-w-md mx-auto relative">
+      {/* Notification overlay */}
+      {showNotification && (
+        <div className="absolute top-0 left-0 right-0 bg-green-100 border border-green-500 text-green-700 px-4 py-3 rounded mb-4 shadow-md flex items-center justify-between z-10">
+          <div className="flex items-center">
+            <Bell className="mr-2" size={20} />
+            <div>
+              <p className="font-bold">Request sent!</p>
+              <p className="text-sm">Your {selectedRide} driver is on the way</p>
             </div>
           </div>
-         )) } */}
-          <div className="recomendations ">
-            <div className="car flex justify-between items-center gap-3">
-              <img className="h-[80px] " src="../images/uberMoto.jpeg" alt="" />
-              <div className="car-details">
-                <h1
-                  className="font-bold text-2xl"
-                >
-                  Moto
-                </h1>
-                <p>{location.state.time}</p>
-                <div className=" text-center text-white w-[70px] rounded-lg bg-blue-500">
-                  {location.state.distance}
-                </div>
-              </div>
-              <h1 className="my-14 font-bold ">$ {location.state.price.moto}</h1>
-            </div>
-          </div>
-
-          <div className="recomendations ">
-            <div className="car flex justify-between items-center gap-3">
-              <img className="h-[150px] w-[150px]" src="../images/rideauto.png" alt="" />
-              <div className="car-details">
-                <h1
-                  className="font-bold text-2xl"
-                >
-                  Auto
-                </h1>
-                <p>{location.state.time}</p>
-                <div className=" text-center text-white w-[70px] rounded-lg bg-blue-500">
-                  {location.state.distance}
-                </div>
-              </div>
-              <h1 className="my-14 font-bold ">$ {location.state.price.auto}</h1>
-            </div>
-          </div>
-
-          <div className="recomendations ">
-            <div className="car flex justify-between items-center gap-3">
-              <img className="h-[100px] w-[100px]" src="../images/ride.png" alt="" />
-              <div className="car-details">
-                <h1
-                  className="font-bold text-2xl"
-                >
-                  Go Sedan
-                </h1>
-                <p>{location.state.time}</p>
-                <div className=" text-center text-white w-[70px] rounded-lg bg-blue-500">
-                  {location.state.distance}
-                </div>
-              </div>
-              <h1 className="my-14 font-bold ">$ {location.state.price.car}</h1>
-            </div>
+          <div className="bg-green-200 p-2 rounded-full">
+            {rideIcons[selectedRide]}
           </div>
         </div>
-    
-        <div className="buttons flex ">
-          <button className="bg-yellow-300 text-black rounded-lg h-12 w-[200px]">
-            Cash
-          </button>
-          <button className="bg-black text-white rounded-lg h-12 w-[200px] mx-10">
-            Request Valan Go
-          </button>
+      )}
+
+      {/* Moto Option */}
+      <button
+        className={`border rounded-lg p-3 w-full hover:bg-gray-50 transition-all ${selectedRide === 'moto' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}
+        onClick={() => handleRideSelect('moto')}
+      >
+        <div className="flex items-center justify-between">
+          <div className="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center text-2xl">
+            🏍️
+          </div>
+          <div className="flex items-center gap-4">
+            <div>
+              <h3 className="font-bold text-lg">Moto</h3>
+              <p className="text-gray-500 text-sm">{location.state.time}</p>
+              <span className="inline-block text-sm text-white bg-blue-500 px-2 py-1 rounded mt-1">
+                {location.state.distance}
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="font-bold">₹{location.state.price.moto}</span>
+            {selectedRide === 'moto' && <Check className="text-blue-500" size={20} />}
+          </div>
         </div>
-      </div>
+      </button>
+
+      {/* Auto Option */}
+      <button
+        className={`border rounded-lg p-3 hover:bg-gray-50 transition-all ${selectedRide === 'auto' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}
+        onClick={() => handleRideSelect('auto')}
+      >
+        <div className="flex items-center justify-between">
+          <div className="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center text-2xl">
+            🛺
+          </div>
+          <div className="flex items-center gap-4">
+            <div>
+              <h3 className="font-bold text-lg">Auto</h3>
+              <p className="text-gray-500 text-sm">{location.state.time}</p>
+              <span className="inline-block text-sm text-white bg-blue-500 px-2 py-1 rounded mt-1">
+                {location.state.distance}
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="font-bold">₹{location.state.price.auto}</span>
+            {selectedRide === 'auto' && <Check className="text-blue-500" size={20} />}
+          </div>
+        </div>
+      </button>
+
+      {/* Sedan Option */}
+      <button
+        className={`border rounded-lg p-3 hover:bg-gray-50 transition-all ${selectedRide === 'sedan' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}
+        onClick={() => handleRideSelect('sedan')}
+      >
+        <div className="flex items-center justify-between">
+          <div className="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center text-2xl">
+            🚗
+          </div>
+          <div className="flex items-center gap-4">
+            <div>
+              <h3 className="font-bold text-lg">Go Sedan</h3>
+              <p className="text-gray-500 text-sm">{location.state.time}</p>
+              <span className="inline-block text-sm text-white bg-blue-500 px-2 py-1 rounded mt-1">
+                {location.state.distance}
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="font-bold">₹{location.state.price.car}</span>
+            {selectedRide === 'sedan' && <Check className="text-blue-500" size={20} />}
+          </div>
+        </div>
+      </button>
+
+      {/* Confirm Button */}
+      <button
+        className={`mt-4 py-3 rounded-lg font-medium text-black transition-all ${
+          selectedRide 
+            ? isConfirming 
+              ? 'bg-gray-300' 
+              : 'bg-yellow-500 hover:bg-yellow-600' 
+            : 'bg-gray-300 cursor-not-allowed'
+        }`}
+        disabled={!selectedRide || isConfirming}
+        onClick={handleConfirmRide}
+      >
+        {isConfirming ? (
+          <span className="flex items-center justify-center">
+            <div className="animate-spin h-5 w-5 border-2 border-gray-500 border-t-transparent rounded-full mr-2"></div>
+            Connecting...
+          </span>
+        ) : (
+          `Confirm ${selectedRide && selectedRide.charAt(0).toUpperCase() + selectedRide.slice(1)}`
+        )}
+      </button>
     </div>
   );
 };
 
 export default Chooseride;
+
+// export default Chooseride
