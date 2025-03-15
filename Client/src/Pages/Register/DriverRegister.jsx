@@ -114,6 +114,7 @@ function DriverRegister() {
                 className="mt-1 p-2 border rounded-md focus:ring focus:ring-blue-200"
               >
                 <option value="">Select a vehicle</option>
+                <option value="Moto">Moto</option>
                 <option value="Auto">Auto</option>
                 <option value="Car">Car</option>
               </select>

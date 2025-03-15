@@ -24,7 +24,7 @@ import RiderDestination from "./Pages/Destination/RiderDestination";
 
 function App() {
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -42,7 +42,7 @@ function App() {
         <Route path="/destination/:id" element={<MapWithDistance />} />
 
       </Routes>
-    </>
+    </div>
   );
 }
 

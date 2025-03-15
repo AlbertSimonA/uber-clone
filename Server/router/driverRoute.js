@@ -1,5 +1,6 @@
 import express from "express";
 import Driver from "../model/driverModal.js";
+import AvailableRide from "../model/avilableRideModal.js";
 
 const router = express.Router();
 
@@ -76,6 +77,54 @@ router.get("/get-allDrivers", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "An error occurred during driver registration.",
+      error: error.message,
+    });
+  }
+});
+
+// fetch all available rides
+
+router.get("/get-allAvailableRides", async (req, res) => {
+  try {
+    const allRides = await AvailableRide.find({});
+
+    console.log(allRides, "allRidesallRidesallRidesallRides");
+
+    res.status(200).json({
+      success: true,
+      message: "Rides find successfully.",
+      ride: allRides,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "An error occurred during driver registration.",
+      error: error.message,
+    });
+  }
+});
+
+// accept ride
+router.post("/accept-ride", async (req, res) => {
+  try {
+    const { rideId } = req.body;
+    const ride = await AvailableRide.findById(rideId);
+    if (!ride) {
+      return res.status(404).json({
+        success: false,
+        message: "Ride not found.",
+      });
+    }
+    ride.status = "Accepted";
+    await ride.save();
+    res.status(200).json({
+      success: true,
+      message: "Ride accepted successfully.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while accepting the ride.",
       error: error.message,
     });
   }

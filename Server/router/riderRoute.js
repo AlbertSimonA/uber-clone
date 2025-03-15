@@ -2,6 +2,7 @@ import express from "express";
 import Ride from "../model/rideModal.js"; // Assuming the Ride schema is in `model/rideModel.js`
 import User from "../model/userModel.js"; // For user validation
 import { Client } from "@googlemaps/google-maps-services-js";
+import AvailableRide from "../model/avilableRideModal.js";
 
 const router = express.Router();
 const client = new Client();
@@ -56,6 +57,63 @@ router.post("/book-ride", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "An error occurred while booking the ride.",
+      error: error.message,
+    });
+  }
+});
+
+// Submit Ride
+router.post("/submit-ride", async (req, res) => {
+  try {
+    const { status, destination, rideType, price, distance, time } = req.body;
+    console.log(req.body);
+
+    const newRide = await AvailableRide.create({
+      destinationFrom: destination.from,
+      destinationTo: destination.to,
+      rideType,
+      price,
+      distance,
+      time,
+      status: "Pending",
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Ride submitted successfully.",
+      rideId: newRide.id
+    });
+  } catch (error) {
+    console.error("Submit Ride Error:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while submitting the ride.",
+      error: error.message,
+    });
+  }
+});
+
+// Check Ride Status
+router.get("/check-ride-status", async (req, res) => {
+  try {
+    const { rideId } = req.query;
+    const ride = await AvailableRide.findById(rideId);
+    if (!ride) {
+      return res.status(404).json({
+        success: false,
+        message: "Ride not found.",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Ride status retrieved successfully.",
+      rideStats: ride.status,
+    });
+  } catch (error) {
+    console.error("Check Ride Status Error:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while checking the ride status.",
       error: error.message,
     });
   }

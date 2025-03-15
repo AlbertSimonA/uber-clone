@@ -86,8 +86,12 @@ function RiderDestination() {
         //   }
         );
         console.log(response.data);
+        const stats = {
+          ...response.data,
+          distination: { from, to },
+        }
         // setDestinationData(response.data);
-        navigate("/to-ride", { state: response.data });
+        navigate("/to-ride", { state: stats });
       } catch (error) {
         console.error(error);
       }
